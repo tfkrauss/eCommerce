@@ -4,16 +4,6 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 
-# Ignore MongoDB data directory
-data/
-
-# Ignore log files
-*.log/
-
-# Ignore OS-specific files
-.DS_Store
-Thumbs.db
-
 ### STS ###
 .apt_generated
 .classpath
@@ -42,3 +32,4 @@ build/
 ### VS Code ###
 .vscode/
 
+/inventory-service-mysql/
