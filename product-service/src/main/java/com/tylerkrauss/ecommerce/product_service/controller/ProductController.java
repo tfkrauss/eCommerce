@@ -26,6 +26,14 @@ public class ProductController {
    @GetMapping
    @ResponseStatus(HttpStatus.OK)
    public List<ProductResponse> getAllProducts() {
+
+//      //Simulate timout for circuitbreaker
+//      try {
+//         Thread.sleep(5000);
+//      } catch (InterruptedException e) {
+//         throw new RuntimeException(e);
+//      }
+      System.out.println("Getting all products");
       return productService.getAllProducts();
    }
 }
