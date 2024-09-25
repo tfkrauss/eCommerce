@@ -30,6 +30,10 @@ public class ProductService {
    }
 
    public List<ProductResponse> getAllProducts() {
+      System.out.println(productRepository.findAll()
+            .stream()
+            .map(product -> new ProductResponse(product.getId(), product.getSkuCode(), product.getName(), product.getDescription(), product.getPrice()))
+            .toList());
       return productRepository.findAll()
             .stream()
             .map(product -> new ProductResponse(product.getId(), product.getSkuCode(), product.getName(), product.getDescription(), product.getPrice()))

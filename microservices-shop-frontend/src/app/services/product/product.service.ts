@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {Product} from "../../model/product";
+import {Product, ProductWithInventoryRequest} from "../../model/product";
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +15,7 @@ export class ProductService {
     return this.httpClient.get<Array<Product>>('http://localhost:9000/api/product');
   }
 
-  createProduct(product: Product): Observable<Product> {
-    return this.httpClient.post<Product>('http://localhost:9000/api/product', product);
+  createProduct(request: ProductWithInventoryRequest): Observable<any> {
+    return this.httpClient.post<Product>('http://localhost:9000/api/product-with-inventory', request);
   }
 }

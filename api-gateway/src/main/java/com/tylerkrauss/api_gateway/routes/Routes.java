@@ -1,11 +1,16 @@
 package com.tylerkrauss.api_gateway.routes;
 
+import com.tylerkrauss.api_gateway.model.InventoryRequest;
+import com.tylerkrauss.api_gateway.model.Product;
+import com.tylerkrauss.api_gateway.model.ProductWithInventoryRequest;
 import org.springframework.cloud.gateway.server.mvc.filter.CircuitBreakerFilterFunctions;
 import org.springframework.cloud.gateway.server.mvc.handler.GatewayRouterFunctions;
 import org.springframework.cloud.gateway.server.mvc.handler.HandlerFunctions;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Mono;
 import org.springframework.web.servlet.function.RequestPredicates;
 import org.springframework.web.servlet.function.RouterFunction;
 import org.springframework.web.servlet.function.ServerResponse;
@@ -15,6 +20,7 @@ import java.net.URI;
 import static org.springframework.cloud.gateway.server.mvc.filter.CircuitBreakerFilterFunctions.circuitBreaker;
 import static org.springframework.cloud.gateway.server.mvc.filter.FilterFunctions.setPath;
 import static org.springframework.cloud.gateway.server.mvc.handler.GatewayRouterFunctions.route;
+
 
 
 @Configuration
@@ -77,4 +83,7 @@ public class Routes {
             .GET("/fallbackRoute", request -> ServerResponse.status(HttpStatus.SERVICE_UNAVAILABLE).body("Service Unavailable, please try again later"))
             .build();
    }
+
+   //For adding a new product. First calls the product service to add a new product, then adds the product and stock to inv service.
+
 }

@@ -1,6 +1,6 @@
 import {Component, inject} from '@angular/core';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
-import {Product} from "../../model/product";
+import {Product, ProductWithInventoryRequest} from "../../model/product";
 import {ProductService} from "../../services/product/product.service";
 import {NgIf} from "@angular/common";
 
@@ -21,26 +21,34 @@ export class AddProductComponent {
       skuCode: ['', [Validators.required]],
       name: ['', [Validators.required]],
       description: ['', [Validators.required]],
-      price: [0, [Validators.required]]
+      price: [0, [Validators.required]],
+      quantity: [0, [Validators.required]]
     })
   }
 
+  //Add call to inventory service here?
   onSubmit(): void {
     if (this.addProductForm.valid) {
-      console.log(this.addProductForm.value);
+      // Build the product object from form inputs
       const product: Product = {
         skuCode: this.addProductForm.get('skuCode')?.value,
         name: this.addProductForm.get('name')?.value,
         description: this.addProductForm.get('description')?.value,
-        price: this.addProductForm.get('price')?.value
+        price: this.addProductForm.get('price')?.value,
       }
-      console.log(product.skuCode);
-      this.productService.createProduct(product).subscribe(product => {
+      // Build ProductWithInventoryRequest to include product and quantity
+      const productWithInventory: ProductWithInventoryRequest = {
+        product: product,
+        quantity: this.addProductForm.get('quantity')?.value
+      };
+      console.log(productWithInventory);
+      this.productService.createProduct(productWithInventory).subscribe(response => {
+        console.log('Product and inventory created successfully:', response);
         this.productCreated = true;
         this.addProductForm.reset();
       })
     } else {
-      console.log('Form is not valid');
+      console.log('Error creating product or updating inventory', Error);
     }
   }
 
@@ -58,5 +66,9 @@ export class AddProductComponent {
 
   get price() {
     return this.addProductForm.get('price');
+  }
+
+  get quantity() {
+    return this.addProductForm.get('quantity');
   }
 }
