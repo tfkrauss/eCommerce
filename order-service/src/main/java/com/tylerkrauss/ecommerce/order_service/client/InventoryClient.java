@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.service.annotation.GetExchange;
+import org.springframework.web.service.annotation.PutExchange;
 
 @Slf4j
 public interface InventoryClient {
@@ -23,4 +24,9 @@ public interface InventoryClient {
       log.info("Cannot get inventory for skucode {}, failure reason: {}", code, throwable.getMessage());
       return false;
    }
+
+   @PutExchange("/api/inventory")
+   @CircuitBreaker(name = "inventory", fallbackMethod = "fallbackMethod")
+   @Retry(name = "inventory")
+   boolean decrementStock(@RequestParam String skuCode, @RequestParam Integer quantity);
 }

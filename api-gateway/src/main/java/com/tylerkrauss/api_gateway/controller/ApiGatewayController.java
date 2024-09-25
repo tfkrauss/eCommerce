@@ -1,6 +1,5 @@
 package com.tylerkrauss.api_gateway.controller;
 
-import com.tylerkrauss.api_gateway.model.InventoryRequest;
 import com.tylerkrauss.api_gateway.model.Product;
 import com.tylerkrauss.api_gateway.model.ProductWithInventoryRequest;
 import com.tylerkrauss.api_gateway.service.KeycloakTokenService;
